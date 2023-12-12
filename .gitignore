@@ -1,0 +1,5 @@
+/data
+*.dta
+*.csv.gz
+*.pdf
+.DS_Store
