@@ -1,0 +1,13 @@
+---
+title: "First sample"
+output: html_notebook
+---
+
+Se donner pour consigne de remove les colonnes et les lignes ou il manque plus de X et Y % de données
+
+Exemple ci-dessous > à automatiser.
+
+sum(is.na(concatenated_file_csv$dn008c))/nrow(concatenated_file_csv)
+```{r}
+plot(cars)
+```
