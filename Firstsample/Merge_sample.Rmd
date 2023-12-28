@@ -1,0 +1,35 @@
+---
+title: "Merge first sample"
+output: html_notebook
+---
+
+Library
+```{r}
+library(readr)
+library(haven)
+library(dplyr)
+library(purrr)
+
+```
+
+Merge files
+```{r}
+# Set the path to the directory containing your .dta files
+directory_path <- "C:\\data\\sharew1"
+
+# List all .dta files in the directory
+file_list <- list.files(directory_path, pattern = "\\.dta$", full.names = TRUE)
+
+# Read each file and store in a list of data frames
+data_list <- lapply(file_list, read_dta)
+
+# Merge all data frames by 'mergeid'
+merged_data <- reduce(data_list, ~full_join(.x, .y, by = "mergeid"))
+
+```
+
+
+Write CSV
+```{r}
+write.csv(merged_data, "MD.csv")
+```
