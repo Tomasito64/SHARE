@@ -15,6 +15,8 @@ library(purrr)
 Open file
 ```{r}
 MD <- read_csv("C:/Users/thoma/SHARE/Firstsample/MD.csv")
+MD$X1 = NULL
+
 #View(MD)
 ```
 
@@ -22,11 +24,16 @@ Observations
 ```{r}
 # Calculate and print the percentage of NA values for each column
 na_percentages_MD <- colMeans(is.na(MD)) * 100
-#print(na_percentages_MD)
-mean_MD = mean(na_percentages_MD)
-md_MD = median(na_percentages_MD)
+print(na_percentages_MD)
+hist(na_percentages_MD)
 
+#I explore the variables one by one and write down those that should not be deleted
+na_percentages_MD_20 <- na_percentages_MD[na_percentages_MD >= 20]
+print(na_percentages_MD_20)
 ```
+dn018_ dn019_ dn027_1
+
+ph002_ ph003_ > à surveiller
 
 TEST
 ```{r}
@@ -54,15 +61,33 @@ Remove rows and columns when the proportion of NA exceeds 20 %
 # Threshold for NA values
 na_threshold <- 0.2
 
+# List of columns to exclude from removal
+exclude_columns <- c("dn018_", "dn019_", "dn027_1", "br003_", "br006_")
+
 # Store names of columns to be removed
 removed_columns <- names(MD)[colSums(is.na(MD)) / nrow(MD) >= na_threshold]
+
+# Number of variables to remove
+lrm = length(removed_columns)
+test1 = lrm - length(exclude_columns)
 
 # Print names of removed columns
 print(removed_columns)
 
-# Remove columns with more than "na_threshold" NA
-MD <- MD[, colSums(is.na(MD)) / nrow(MD) < na_threshold]
+# Remove columns with more than "na_threshold" NA, excluding specified columns
+MDF <- MD[, !(colSums(is.na(MD)) / nrow(MD) >= na_threshold & !names(MD) %in% exclude_columns)]
 
+test2 = length(MD)-length(MDF)
+
+# List of column to remove after all
+
+# Columns to be set to NULL
+columns_to_remove = c("hhid1.x", "mergeidp1.x", "coupleid1.x", "language.x", "br017_","hhid1.y", "mergeidp1.y", "coupleid1.y", "language.y", "country.y", "dn002_", "mergeidp1.x.x", "coupleid1.x.x","hhid1.x.x", "language.x.x", "country.x.x", "mergeidp1.y.y", "coupleid1.y.y", "language.y.y", "country.y.y", "hhid1.y.y")
+
+# Loop through each column and set it to NULL
+for(column in columns_to_remove) {
+  MDF[[column]] <- NULL
+}
 
 ```
 

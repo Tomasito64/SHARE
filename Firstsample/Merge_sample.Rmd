@@ -24,12 +24,12 @@ file_list <- list.files(directory_path, pattern = "\\.dta$", full.names = TRUE)
 data_list <- lapply(file_list, read_dta)
 
 # Merge all data frames by 'mergeid'
-merged_data <- reduce(data_list, ~full_join(.x, .y, by = "mergeid"))
+merged_data <- reduce(data_list, ~ full_join(.x, .y, by = "mergeid"))
 
 ```
 
 
 Write CSV
 ```{r}
-write.csv(merged_data, "MD.csv")
+#write.csv(merged_data, "MD.csv")
 ```
