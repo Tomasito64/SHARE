@@ -1761,47 +1761,21 @@ display: none;
 <p>Library</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShyZWFkcilcbmBgYCJ9 -->
-<pre class="r"><code>library(readr)</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShyZWFkcilcbmxpYnJhcnkoaGF2ZW4pXG5saWJyYXJ5KGRwbHlyKVxubGlicmFyeShwdXJycilcblxuYGBgIn0= -->
+<pre class="r"><code>library(readr)
+library(haven)
+library(dplyr)
+library(purrr)
+</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiV2FybmluZzogcGFja2FnZSDigJhyZWFkcuKAmSB3YXMgYnVpbHQgdW5kZXIgUiB2ZXJzaW9uIDMuNi4zXG4ifQ== -->
-<pre><code>Warning: package ‘readr’ was built under R version 3.6.3</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShoYXZlbilcbmBgYCJ9 -->
-<pre class="r"><code>library(haven)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiV2FybmluZzogcGFja2FnZSDigJhoYXZlbuKAmSB3YXMgYnVpbHQgdW5kZXIgUiB2ZXJzaW9uIDMuNi4zXG4ifQ== -->
-<pre><code>Warning: package ‘haven’ was built under R version 3.6.3</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShkcGx5cilcbmBgYCJ9 -->
-<pre class="r"><code>library(dplyr)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiV2FybmluZzogcGFja2FnZSDigJhkcGx5cuKAmSB3YXMgYnVpbHQgdW5kZXIgUiB2ZXJzaW9uIDMuNi4zXG5BdHRhY2hpbmcgcGFja2FnZTog4oCYZHBseXLigJlcblxuVGhlIGZvbGxvd2luZyBvYmplY3RzIGFyZSBtYXNrZWQgZnJvbSDigJhwYWNrYWdlOnN0YXRz4oCZOlxuXG4gICAgZmlsdGVyLCBsYWdcblxuVGhlIGZvbGxvd2luZyBvYmplY3RzIGFyZSBtYXNrZWQgZnJvbSDigJhwYWNrYWdlOmJhc2XigJk6XG5cbiAgICBpbnRlcnNlY3QsIHNldGRpZmYsIHNldGVxdWFsLCB1bmlvblxuIn0= -->
-<pre><code>Warning: package ‘dplyr’ was built under R version 3.6.3
-Attaching package: ‘dplyr’
-
-The following objects are masked from ‘package:stats’:
-
-    filter, lag
-
-The following objects are masked from ‘package:base’:
-
-    intersect, setdiff, setequal, union</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShwdXJycilcbmBgYCJ9 -->
-<pre class="r"><code>library(purrr)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiV2FybmluZzogcGFja2FnZSDigJhwdXJycuKAmSB3YXMgYnVpbHQgdW5kZXIgUiB2ZXJzaW9uIDMuNi4zXG4ifQ== -->
-<pre><code>Warning: package ‘purrr’ was built under R version 3.6.3</code></pre>
-<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <p>Merge files</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBTZXQgdGhlIHBhdGggdG8gdGhlIGRpcmVjdG9yeSBjb250YWluaW5nIHlvdXIgLmR0YSBmaWxlc1xuZGlyZWN0b3J5X3BhdGggPC0gXCJDOlxcXFxkYXRhXFxcXHNoYXJldzFcIlxuXG4jIExpc3QgYWxsIC5kdGEgZmlsZXMgaW4gdGhlIGRpcmVjdG9yeVxuZmlsZV9saXN0IDwtIGxpc3QuZmlsZXMoZGlyZWN0b3J5X3BhdGgsIHBhdHRlcm4gPSBcIlxcXFwuZHRhJFwiLCBmdWxsLm5hbWVzID0gVFJVRSlcblxuIyBSZWFkIGVhY2ggZmlsZSBhbmQgc3RvcmUgaW4gYSBsaXN0IG9mIGRhdGEgZnJhbWVzXG5kYXRhX2xpc3QgPC0gbGFwcGx5KGZpbGVfbGlzdCwgcmVhZF9kdGEpXG5cbiMgTWVyZ2UgYWxsIGRhdGEgZnJhbWVzIGJ5ICdtZXJnZWlkJ1xubWVyZ2VkX2RhdGEgPC0gcmVkdWNlKGRhdGFfbGlzdCwgfiBmdWxsX2pvaW4oLngsIC55LCBieSA9IFwibWVyZ2VpZFwiKSlcblxuYGBgIn0= -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBTZXQgdGhlIHBhdGggdG8gdGhlIGRpcmVjdG9yeSBjb250YWluaW5nIHlvdXIgLmR0YSBmaWxlc1xuZGlyZWN0b3J5X3BhdGggPC0gXCJDOlxcXFxkYXRhXFxcXHNoYXJlXFxcXHNoYXJldzFcIlxuXG4jIExpc3QgYWxsIC5kdGEgZmlsZXMgaW4gdGhlIGRpcmVjdG9yeVxuZmlsZV9saXN0IDwtIGxpc3QuZmlsZXMoZGlyZWN0b3J5X3BhdGgsIHBhdHRlcm4gPSBcIlxcXFwuZHRhJFwiLCBmdWxsLm5hbWVzID0gVFJVRSlcblxuIyBSZWFkIGVhY2ggZmlsZSBhbmQgc3RvcmUgaW4gYSBsaXN0IG9mIGRhdGEgZnJhbWVzXG5kYXRhX2xpc3QgPC0gbGFwcGx5KGZpbGVfbGlzdCwgcmVhZF9kdGEpXG5cbiMgTWVyZ2UgYWxsIGRhdGEgZnJhbWVzIGJ5ICdtZXJnZWlkJ1xubWVyZ2VkX2RhdGEgPC0gcmVkdWNlKGRhdGFfbGlzdCwgfiBmdWxsX2pvaW4oLngsIC55LCBieSA9IFwibWVyZ2VpZFwiKSlcblxuYGBgIn0= -->
 <pre class="r"><code># Set the path to the directory containing your .dta files
-directory_path &lt;- &quot;C:\\data\\sharew1&quot;
+directory_path &lt;- &quot;C:\\data\\share\\sharew1&quot;
 
 # List all .dta files in the directory
 file_list &lt;- list.files(directory_path, pattern = &quot;\\.dta$&quot;, full.names = TRUE)
@@ -1823,7 +1797,7 @@ merged_data &lt;- reduce(data_list, ~ full_join(.x, .y, by = &quot;mergeid&quot;
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 
-<div id="rmd-source-code">LS0tDQp0aXRsZTogIk1lcmdlIGZpcnN0IHNhbXBsZSINCm91dHB1dDogaHRtbF9ub3RlYm9vaw0KLS0tDQoNCkxpYnJhcnkNCmBgYHtyfQ0KbGlicmFyeShyZWFkcikNCmxpYnJhcnkoaGF2ZW4pDQpsaWJyYXJ5KGRwbHlyKQ0KbGlicmFyeShwdXJycikNCg0KYGBgDQoNCk1lcmdlIGZpbGVzDQpgYGB7cn0NCiMgU2V0IHRoZSBwYXRoIHRvIHRoZSBkaXJlY3RvcnkgY29udGFpbmluZyB5b3VyIC5kdGEgZmlsZXMNCmRpcmVjdG9yeV9wYXRoIDwtICJDOlxcZGF0YVxcc2hhcmV3MSINCg0KIyBMaXN0IGFsbCAuZHRhIGZpbGVzIGluIHRoZSBkaXJlY3RvcnkNCmZpbGVfbGlzdCA8LSBsaXN0LmZpbGVzKGRpcmVjdG9yeV9wYXRoLCBwYXR0ZXJuID0gIlxcLmR0YSQiLCBmdWxsLm5hbWVzID0gVFJVRSkNCg0KIyBSZWFkIGVhY2ggZmlsZSBhbmQgc3RvcmUgaW4gYSBsaXN0IG9mIGRhdGEgZnJhbWVzDQpkYXRhX2xpc3QgPC0gbGFwcGx5KGZpbGVfbGlzdCwgcmVhZF9kdGEpDQoNCiMgTWVyZ2UgYWxsIGRhdGEgZnJhbWVzIGJ5ICdtZXJnZWlkJw0KbWVyZ2VkX2RhdGEgPC0gcmVkdWNlKGRhdGFfbGlzdCwgfiBmdWxsX2pvaW4oLngsIC55LCBieSA9ICJtZXJnZWlkIikpDQoNCmBgYA0KDQoNCldyaXRlIENTVg0KYGBge3J9DQojd3JpdGUuY3N2KG1lcmdlZF9kYXRhLCAiTUQuY3N2IikNCmBgYA0K</div>
+<div id="rmd-source-code">LS0tDQp0aXRsZTogIk1lcmdlIGZpcnN0IHNhbXBsZSINCm91dHB1dDogaHRtbF9ub3RlYm9vaw0KLS0tDQoNCkxpYnJhcnkNCmBgYHtyfQ0KbGlicmFyeShyZWFkcikNCmxpYnJhcnkoaGF2ZW4pDQpsaWJyYXJ5KGRwbHlyKQ0KbGlicmFyeShwdXJycikNCg0KYGBgDQoNCk1lcmdlIGZpbGVzDQpgYGB7cn0NCiMgU2V0IHRoZSBwYXRoIHRvIHRoZSBkaXJlY3RvcnkgY29udGFpbmluZyB5b3VyIC5kdGEgZmlsZXMNCmRpcmVjdG9yeV9wYXRoIDwtICJDOlxcZGF0YVxcc2hhcmVcXHNoYXJldzEiDQoNCiMgTGlzdCBhbGwgLmR0YSBmaWxlcyBpbiB0aGUgZGlyZWN0b3J5DQpmaWxlX2xpc3QgPC0gbGlzdC5maWxlcyhkaXJlY3RvcnlfcGF0aCwgcGF0dGVybiA9ICJcXC5kdGEkIiwgZnVsbC5uYW1lcyA9IFRSVUUpDQoNCiMgUmVhZCBlYWNoIGZpbGUgYW5kIHN0b3JlIGluIGEgbGlzdCBvZiBkYXRhIGZyYW1lcw0KZGF0YV9saXN0IDwtIGxhcHBseShmaWxlX2xpc3QsIHJlYWRfZHRhKQ0KDQojIE1lcmdlIGFsbCBkYXRhIGZyYW1lcyBieSAnbWVyZ2VpZCcNCm1lcmdlZF9kYXRhIDwtIHJlZHVjZShkYXRhX2xpc3QsIH4gZnVsbF9qb2luKC54LCAueSwgYnkgPSAibWVyZ2VpZCIpKQ0KDQpgYGANCg0KDQpXcml0ZSBDU1YNCmBgYHtyfQ0KI3dyaXRlLmNzdihtZXJnZWRfZGF0YSwgIk1ELmNzdiIpDQpgYGANCg==</div>
 
 
 

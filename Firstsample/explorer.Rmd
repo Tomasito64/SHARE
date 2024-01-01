@@ -69,31 +69,69 @@ removed_columns <- names(MD)[colSums(is.na(MD)) / nrow(MD) >= na_threshold]
 
 # Number of variables to remove
 lrm = length(removed_columns)
-test1 = lrm - length(exclude_columns)
 
 # Print names of removed columns
-print(removed_columns)
+#print(removed_columns)
 
-# Remove columns with more than "na_threshold" NA, excluding specified columns
-MDF <- MD[, !(colSums(is.na(MD)) / nrow(MD) >= na_threshold & !names(MD) %in% exclude_columns)]
-
-test2 = length(MD)-length(MDF)
 
 # List of column to remove after all
 
+MDF = MD
+
 # Columns to be set to NULL
-columns_to_remove = c("hhid1.x", "mergeidp1.x", "coupleid1.x", "language.x", "br017_","hhid1.y", "mergeidp1.y", "coupleid1.y", "language.y", "country.y", "dn002_", "mergeidp1.x.x", "coupleid1.x.x","hhid1.x.x", "language.x.x", "country.x.x", "mergeidp1.y.y", "coupleid1.y.y", "language.y.y", "country.y.y", "hhid1.y.y")
+columns_to_remove = c("hhid1.x", "mergeidp1.x", "coupleid1.x","country.x","language.x", "br017_","hhid1.y", "mergeidp1.y", "coupleid1.y", "language.y", "country.y", "dn002_", "mergeidp1.x.x", "coupleid1.x.x","hhid1.x.x", "language.x.x", "country.x.x", "mergeidp1.y.y", "coupleid1.y.y", "language.y.y", "country.y.y", "hhid1.y.y", "dn038_","ph055_")
 
-# Loop through each column and set it to NULL
-for(column in columns_to_remove) {
-  MDF[[column]] <- NULL
-}
+MDF <- MDF %>% select(-all_of(columns_to_remove))
 
+
+MDF <- MDF %>%
+  select(-c(mh002_:mh017_))
+
+MDF <- MDF %>%
+  select(-c(euro1:euro12))
+
+
+# Remove columns with more than "na_threshold" NA, excluding specified columns
+MDF <- MDF[, !(colSums(is.na(MDF)) / nrow(MDF) >= na_threshold & !names(MDF) %in% exclude_columns)]
 ```
 
+We remove row with NAs > 20%
 ```{r}
 # Remove rows with more than "na_threshold" NA
-MD <- MD[rowSums(is.na(MD)) / ncol(MD) < na_threshold, ]
+MDF <- MDF[rowSums(is.na(MDF)) / ncol(MDF) < na_threshold, ]
+```
+
+Now we calculate EuroD (Euro-D) score to reduce data
+```{r}
+# Transform -1 and -2 by NA
+
+column_index_mh002_ <- which(names(MDF) == "mh002_")
+column_index_mh0017_ <- which(names(MDF) == "mh017_")
+
+
+for (i in column_index_mh002_:column_index_mh0017_) {
+  MDF[, i][MDF[, i] == -1] <- NA
+  MDF[, i][MDF[, i] == -2] <- NA
+}
+
+# Testing result
+vectest = unlist(MDF[column_index_mh002_:column_index_mh0017_])
+unique_values <- unique(vectest)
+unique_values
+
+#Some items seem inversed
+
+MDF$test = NA
+
+for (i in MDF$mh003_) {
+  if (!is.na(MDF$mh003_[i])) {
+    if (MDF$test[i] == 1) {
+      MDF$mh003_[i] <- 0
+    } else if (MDF$mh003_[i] == 0) {
+      MDF$mh003_[i] <- 1
+    }
+  }
+}
 ```
 
 

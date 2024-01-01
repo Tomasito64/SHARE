@@ -15,7 +15,7 @@ library(purrr)
 Merge files
 ```{r}
 # Set the path to the directory containing your .dta files
-directory_path <- "C:\\data\\sharew1"
+directory_path <- "C:\\data\\share\\sharew1"
 
 # List all .dta files in the directory
 file_list <- list.files(directory_path, pattern = "\\.dta$", full.names = TRUE)
