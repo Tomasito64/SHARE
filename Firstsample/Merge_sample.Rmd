@@ -15,8 +15,8 @@ library(purrr)
 Merge files
 ```{r}
 # Set the path to the directory containing your .dta files
-directory_path <- "C:\\data\\share\\sharew1"
-
+#directory_path <- "C:\\data\\share\\sharew1"
+directory_path <- "C:\\data\\share\\sharew_embryo"
 # List all .dta files in the directory
 file_list <- list.files(directory_path, pattern = "\\.dta$", full.names = TRUE)
 
@@ -31,5 +31,5 @@ merged_data <- reduce(data_list, ~ full_join(.x, .y, by = "mergeid"))
 
 Write CSV
 ```{r}
-#write.csv(merged_data, "MD.csv")
+write.csv(merged_data, "Emb.csv")
 ```
