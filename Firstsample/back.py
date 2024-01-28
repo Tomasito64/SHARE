@@ -8,6 +8,11 @@
 #                                                            #
 ##############################################################
 
+#### IPPORTS
+
+import pandas as pd
+
+
 #############################################################################################################################################
 #                                                                                                                                           
 #        #### Analyze NA in data frame rows                                                                                                 
@@ -58,6 +63,7 @@ def remaining_column(df):
 #                                                                                                                                           
 #############################################################################################################################################
 def explore_NA(variable, df):
+    messages=[]
     na_counter = df[variable].isna().sum()
     ratio_na = na_counter / df.shape[0] *100
     ratio_na = round(ratio_na, 2)
@@ -77,6 +83,7 @@ def explore_NA(variable, df):
     if rep_sup == "y": 
         df = df.drop(variable, axis = 1)
         print("Variable", variable, "is deleted")
+        print(df.columns)
     else :
         reponse = input(f"Can you imput the missing values for '{variable}' ? (y/n): ").lower()
         if reponse == 'y':
@@ -84,21 +91,27 @@ def explore_NA(variable, df):
                 methode = input("Choice of NAs imputation method (mean/median/mode): ").lower()
                 if methode == 'mean':
                     df.loc[:, variable] = df[variable].fillna(df[variable].mean())
+                    na_counter_final = df[variable].isna().sum()                     
+                    messages.append(f"Number of remaining NAs: {na_counter_final}") 
                 elif methode == 'median':
                     df.loc[:, variable] = df[variable].fillna(df[variable].median())
+                    na_counter_final = df[variable].isna().sum()                     
+                    messages.append(f"Number of remaining NAs: {na_counter_final}") 
                 elif methode == 'mode':
                     mode_value = df[variable].mode()[0]
-                    df.loc[:, variable] = df[variable].fillna(mode_value)  
+                    df.loc[:, variable] = df[variable].fillna(mode_value)
+                    na_counter_final = df[variable].isna().sum()                     
+                    messages.append(f"Number of remaining NAs:{na_counter_final}")   
                 else:
-                    print("Method not envisaged at present.")
+                    messages.append("Method not envisaged at present.")
             else:
-                print("Imputation not possible for non-numerical data.")
+                messages.append("Imputation not possible for non-numerical data.")
         elif reponse == 'n':
-            print(f"No imputation for this variable '{variable}'.")
+            messages.append(f"No imputation for this variable : {variable}.")
         else:
-            print("Unrecognized answer. Loser !")
+            messages.append("Unrecognized answer. Loser !")
 
-    return df
+    return df, messages
 
 
 #############################################################################################################################################
@@ -112,3 +125,5 @@ def explore_NA(variable, df):
 #     if 
 #     if 
 #     if 
+
+ 
