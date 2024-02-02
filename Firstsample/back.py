@@ -62,61 +62,122 @@ def remaining_column(df):
 #        ## Inputs : A dataframe and a variable                         ## Ouputs : Informations about Na in a variable                     
 #                                                                                                                                           
 #############################################################################################################################################
-def explore_NA(variable, df):
-    messages=[]
-    na_counter = df[variable].isna().sum()
-    ratio_na = na_counter / df.shape[0] *100
+# def explore_NA(variable, df):
+#     messages=[]
+#     na_counter = df[variable].isna().sum()
+#     ratio_na = na_counter / df.shape[0] *100
+#     ratio_na = round(ratio_na, 2)
+
+#     modalites = df[variable].unique()
+#     frequency_table = df[variable].value_counts()
+
+#     variable_type = type(variable)
+    
+#     print(ratio_na, "% of NA in", variable)
+#     print("modalities:", modalites)
+#     print("frequency_table:", frequency_table)
+#     print("type :", variable_type)
+
+#         # Initialization of the messages list
+#     messages = []
+
+#     # Ask the user about the removal of the column
+#     rep_sup_column = input(f"Do you want to remove the variable '{variable}'? (y/n): ").lower()
+#     if rep_sup_column == "y": 
+#         df = df.drop(variable, axis=1)
+#         messages.append(f"Variable {variable} is deleted")
+#         messages.append(f"Remaining columns: {df.columns}")
+#     else:
+#         # Ask the user about the removal of NA rows
+#         rep_sup_rows = input("Do you want to remove the rows with NAs? (y/n): ").lower()
+#         if rep_sup_rows == "y":
+#             df_mem = df
+#             df = df.dropna(subset=[variable])
+#             number_of_rows_now = len(df)
+#             number_of_rows_mem = len(df_mem)
+#             result_dif_row = number_of_rows_mem - number_of_rows_now
+#             messages.append(f"Remaining rows:{number_of_rows_now} with {result_dif_row} lost")
+#         else:
+#             # Imputation values
+#             reponse = input(f"Can you impute the missing values for '{variable}'? (y/n): ").lower()
+#             if reponse == 'y':
+#                 if pd.api.types.is_numeric_dtype(df[variable]):
+#                     # Numeric data imputation
+#                     methode = input("Choice of NAs imputation method (mean/median/mode): ").lower()
+#                     if methode in ['mean', 'median']:
+#                         impute_value = getattr(df[variable], methode)()
+#                         df.loc[:, variable] = df.loc[:, variable].fillna(impute_value)
+#                     elif methode == 'mode':
+#                         mode_value = df[variable].mode()[0]
+#                         df.loc[:, variable] = df.loc[:, variable].fillna(mode_value)
+#                     else:
+#                         messages.append("Method not envisaged at present.")
+#                 else:
+#                     # Mode imputation for non-numeric data
+#                     mode_value = df[variable].mode()[0]
+#                     df[variable] = df[variable].fillna(mode_value)
+#                 na_counter_final = df[variable].isna().sum()                     
+#                 messages.append(f"Number of remaining NAs: {na_counter_final}")
+#             elif reponse == 'n':
+#                 messages.append(f"No imputation for this variable: {variable}.")
+#             else:
+#                 messages.append("Unrecognized answer. Please respond with 'y' or 'n'.")
+
+#     return df, messages
+
+
+def explore_NA(variable, df, answers=None):
+    if answers is None:
+        answers = {}  # Si aucun dictionnaire de réponses n'est fourni, utilisez un dictionnaire vide
+
+    na_counter = df.loc[:, variable].isna().sum()
+    ratio_na = na_counter / df.shape[0] * 100
     ratio_na = round(ratio_na, 2)
 
-    modalites = df[variable].unique()
-    frequency_table = df[variable].value_counts()
+    modalites = df.loc[:, variable].unique()
+    frequency_table = df.loc[:, variable].value_counts()
 
     variable_type = type(variable)
     
-    print(ratio_na, "% of NA in", variable)
+    print(f"{ratio_na}% of NA in {variable}")
     print("modalities:", modalites)
     print("frequency_table:", frequency_table)
     print("type :", variable_type)
 
-        # Initialization of the messages list
     messages = []
 
-    # Ask the user about the removal of the column
-    rep_sup_column = input(f"Do you want to remove the variable '{variable}'? (y/n): ").lower()
-    if rep_sup_column == "y": 
+    # Utilisez le dictionnaire de réponses si disponible, sinon demandez à l'utilisateur
+    rep_sup_column = answers.get('rep_sup_column', input(f"Do you want to remove the variable '{variable}'? (y/n): ").lower())
+    if rep_sup_column == "y":
         df = df.drop(variable, axis=1)
         messages.append(f"Variable {variable} is deleted")
-        messages.append(f"Remaining columns: {df.columns}")
+        messages.append(f"Remaining columns: {list(df.columns)}")
     else:
-        # Ask the user about the removal of NA rows
-        rep_sup_rows = input("Do you want to remove the rows with NAs? (y/n): ").lower()
+        rep_sup_rows = answers.get('rep_sup_rows', input("Do you want to remove the rows with NAs? (y/n): ").lower())
         if rep_sup_rows == "y":
-            df_mem = df
+            df_mem = df.copy()
             df = df.dropna(subset=[variable])
             number_of_rows_now = len(df)
             number_of_rows_mem = len(df_mem)
             result_dif_row = number_of_rows_mem - number_of_rows_now
-            messages.append(f"Remaining rows:{number_of_rows_now} with {result_dif_row} lost")
+            messages.append(f"Remaining rows: {number_of_rows_now} with {result_dif_row} lost")
         else:
-            # Imputation values
-            reponse = input(f"Can you impute the missing values for '{variable}'? (y/n): ").lower()
+            reponse = answers.get('reponse', input(f"Can you impute the missing values for '{variable}'? (y/n): ").lower())
             if reponse == 'y':
-                if pd.api.types.is_numeric_dtype(df[variable]):
-                    # Numeric data imputation
-                    methode = input("Choice of NAs imputation method (mean/median/mode): ").lower()
-                    if methode in ['mean', 'median']:
-                        impute_value = getattr(df[variable], methode)()
+                if pd.api.types.is_numeric_dtype(df.loc[:, variable]):
+                    method = answers.get('method', input("Choice of NAs imputation method (mean/median/mode): ").lower())
+                    if method in ['mean', 'median']:
+                        impute_value = getattr(df.loc[:, variable], method)()
                         df.loc[:, variable] = df.loc[:, variable].fillna(impute_value)
-                    elif methode == 'mode':
-                        mode_value = df[variable].mode()[0]
+                    elif method == 'mode':
+                        mode_value = df.loc[:, variable].mode()[0]
                         df.loc[:, variable] = df.loc[:, variable].fillna(mode_value)
                     else:
                         messages.append("Method not envisaged at present.")
                 else:
-                    # Mode imputation for non-numeric data
-                    mode_value = df[variable].mode()[0]
-                    df[variable] = df[variable].fillna(mode_value)
-                na_counter_final = df[variable].isna().sum()                     
+                    mode_value = df.loc[:, variable].mode()[0]
+                    df.loc[:, variable] = df.loc[:, variable].fillna(mode_value)
+                na_counter_final = df.loc[:, variable].isna().sum()                     
                 messages.append(f"Number of remaining NAs: {na_counter_final}")
             elif reponse == 'n':
                 messages.append(f"No imputation for this variable: {variable}.")
@@ -126,47 +187,6 @@ def explore_NA(variable, df):
     return df, messages
 
 
-    #  # Ask to the user about imputation
-    # rep_sup_column = input(f"Do you want to remove the variable '{variable}' ? (y/n): ").lower()
-    # if rep_sup_column == "y": 
-    #     df = df.drop(variable, axis = 1)
-    #     print("Variable", variable, "is deleted")
-    #     print(df.columns)
-    # else:
-    # # Ask the user about the removal of NA rows
-    # rep_sup_rows = input("Do you want to remove the rows with NAs? (y/n): ").lower()
-    # if rep_sup_rows == "y":
-    #     df = df.dropna(subset=[variable])
-    # else :
-    # # Imputation values
-    #     reponse = input(f"Can you imput the missing values for '{variable}' ? (y/n): ").lower()
-    #     if reponse == 'y':
-    #         if pd.api.types.is_numeric_dtype(df[variable]):
-    #             methode = input("Choice of NAs imputation method (mean/median/mode): ").lower()
-    #             if methode == 'mean':
-    #                 df.loc[:, variable] = df[variable].fillna(df[variable].mean())
-    #                 na_counter_final = df[variable].isna().sum()                     
-    #                 messages.append(f"Number of remaining NAs: {na_counter_final}") 
-    #             elif methode == 'median':
-    #                 df.loc[:, variable] = df[variable].fillna(df[variable].median())
-    #                 na_counter_final = df[variable].isna().sum()                     
-    #                 messages.append(f"Number of remaining NAs: {na_counter_final}") 
-    #             elif methode == 'mode':
-    #                 mode_value = df[variable].mode()[0]
-    #                 df.loc[:, variable] = df[variable].fillna(mode_value)
-    #                 na_counter_final = df[variable].isna().sum()                     
-    #                 messages.append(f"Number of remaining NAs, {na_counter_final}")   
-    #             else:
-    #                 messages.append("Method not envisaged at present.")
-    #         else:
-    #             messages.append("Imputation not possible for non-numerical data.")
-    #     elif reponse == 'n':
-    #         messages.append(f"No imputation for this variable : {variable}.")
-    #     else:
-    #         messages.append("Unrecognized answer. Loser !")
-
-    # return df, messages
-
 
 #############################################################################################################################################
 #                                                                                                                                           #
@@ -175,9 +195,61 @@ def explore_NA(variable, df):
 #        ## Inputs : A dataframe and a variable                         ## Ouputs : Informations about Na in a variable                     #
 #                                                                                                                                           #
 #############################################################################################################################################
-# def NA_imput(name_variale, imput_type)
-#     if 
-#     if 
-#     if 
+import pandas as pd
 
- 
+def explore_NA_auto(variable, df, answers=None):
+    if answers is None:
+        answers = {}  # Si aucun dictionnaire de réponses n'est fourni, utilisez un dictionnaire vide.
+
+    # Calcul du pourcentage de valeurs manquantes pour la variable.
+    na_counter = df.loc[:, variable].isna().sum()
+    ratio_na = na_counter / df.shape[0] * 100
+    ratio_na = round(ratio_na, 2)
+
+    # Affichage des informations de base sur les valeurs manquantes.
+    print(f"{ratio_na}% of NA in {variable}")
+    print("Modalities:", df.loc[:, variable].unique())
+    print("Frequency table:", df.loc[:, variable].value_counts())
+    print("Type:", df.loc[:, variable].dtype)
+
+    messages = []
+
+    # Décision de suppression de la colonne.
+    rep_sup_column = answers.get('rep_sup_column', 'n').lower()
+    if rep_sup_column == "y":
+        df = df.drop(columns=[variable])
+        messages.append(f"Variable {variable} is deleted")
+        messages.append(f"Remaining columns: {list(df.columns)}")
+    else:
+        # Décision de suppression des lignes contenant des valeurs manquantes.
+        rep_sup_rows = answers.get('rep_sup_rows', 'n').lower()
+        if rep_sup_rows == "y":
+            before_rows = df.shape[0]
+            df = df.dropna(subset=[variable])
+            after_rows = df.shape[0]
+            messages.append(f"Rows before: {before_rows}, after: {after_rows}, {before_rows - after_rows} rows removed.")
+        else:
+            # Décision d'imputation des valeurs manquantes.
+            reponse = answers.get('reponse', 'n').lower()
+            if reponse == 'y':
+                method = answers.get('method', 'mode').lower()
+                if method == 'mean' and pd.api.types.is_numeric_dtype(df[variable]):
+                    impute_value = df[variable].mean()
+                elif method == 'median' and pd.api.types.is_numeric_dtype(df[variable]):
+                    impute_value = df[variable].median()
+                elif method == 'mode':
+                    impute_value = df[variable].mode()[0]
+                else:
+                    impute_value = None
+                    messages.append("No suitable imputation method found.")
+
+                if impute_value is not None:
+                    # Correcte modification pour éviter le SettingWithCopyWarning.
+                    df[variable] = df[variable].fillna(impute_value)
+                    messages.append(f"{variable} imputed with {method} value: {impute_value}.")
+                    na_counter_final = df[variable].isna().sum()
+                    messages.append(f"Number of remaining NAs: {na_counter_final}")
+            else:
+                messages.append(f"No action taken for {variable}.")
+
+    return df, messages
