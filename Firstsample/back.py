@@ -13,13 +13,13 @@
 import pandas as pd
 
 
-#############################################################################################################################################
+##################################################################################################################################################################################################
 #                                                                                                                                           
 #        #### Analyze NA in data frame rows                                                                                                 
 #                                                                                                                                           
 #        ## Inputs : A dataframe                          ## Ouputs : Information about Na in a data frame rows                             
 #                                                                                                                                           
-#############################################################################################################################################
+##################################################################################################################################################################################################
 def remaining_rows(df):
     rm_rows  = df.dropna()
     nb_rows = df.shape[0]
@@ -35,97 +35,13 @@ def remaining_rows(df):
 
 
 
-#############################################################################################################################################
+##################################################################################################################################################################################################
 #                                                                                                                                           
-#        #### Analyze NA in data frame columns                                                                                              
+#        #### Analyze NA in data frame columns and propose solutions to deal with them                                                                                       
 #                                                                                                                                           
-#        ## Inputs : A dataframe                          ## Ouputs : Information about Na in a data frame columns                          
+#        ## Inputs : A dataframe ; avariable name ; dictionary         ## Ouputs : Information about Na in a data frame columns and proposals to deal with them                  
 #                                                                                                                                           
-#############################################################################################################################################
-def remaining_column(df):
-    rm_row_columns = df.dropna(axis=1)
-    nb_columns = df.shape[1]
-    nb_rm_columns = rm_row_columns.shape[1]
-    nb_removed_columns = nb_columns - nb_rm_columns
-    ratio_columns_lost = nb_removed_columns/nb_columns*100
-
-    print("Number of dataset columns :", nb_columns)
-    print("Number of remaining columns :", nb_rm_columns)                     
-    print("Number of removed columns : ",nb_removed_columns)
-    print(ratio_columns_lost, "% lost")
-
-
-#############################################################################################################################################
-#                                                                                                                                           
-#        #### Analyze NA in data frame columns                                                                                              
-#                                                                                                                                           
-#        ## Inputs : A dataframe and a variable                         ## Ouputs : Informations about Na in a variable                     
-#                                                                                                                                           
-#############################################################################################################################################
-# def explore_NA(variable, df):
-#     messages=[]
-#     na_counter = df[variable].isna().sum()
-#     ratio_na = na_counter / df.shape[0] *100
-#     ratio_na = round(ratio_na, 2)
-
-#     modalites = df[variable].unique()
-#     frequency_table = df[variable].value_counts()
-
-#     variable_type = type(variable)
-    
-#     print(ratio_na, "% of NA in", variable)
-#     print("modalities:", modalites)
-#     print("frequency_table:", frequency_table)
-#     print("type :", variable_type)
-
-#         # Initialization of the messages list
-#     messages = []
-
-#     # Ask the user about the removal of the column
-#     rep_sup_column = input(f"Do you want to remove the variable '{variable}'? (y/n): ").lower()
-#     if rep_sup_column == "y": 
-#         df = df.drop(variable, axis=1)
-#         messages.append(f"Variable {variable} is deleted")
-#         messages.append(f"Remaining columns: {df.columns}")
-#     else:
-#         # Ask the user about the removal of NA rows
-#         rep_sup_rows = input("Do you want to remove the rows with NAs? (y/n): ").lower()
-#         if rep_sup_rows == "y":
-#             df_mem = df
-#             df = df.dropna(subset=[variable])
-#             number_of_rows_now = len(df)
-#             number_of_rows_mem = len(df_mem)
-#             result_dif_row = number_of_rows_mem - number_of_rows_now
-#             messages.append(f"Remaining rows:{number_of_rows_now} with {result_dif_row} lost")
-#         else:
-#             # Imputation values
-#             reponse = input(f"Can you impute the missing values for '{variable}'? (y/n): ").lower()
-#             if reponse == 'y':
-#                 if pd.api.types.is_numeric_dtype(df[variable]):
-#                     # Numeric data imputation
-#                     methode = input("Choice of NAs imputation method (mean/median/mode): ").lower()
-#                     if methode in ['mean', 'median']:
-#                         impute_value = getattr(df[variable], methode)()
-#                         df.loc[:, variable] = df.loc[:, variable].fillna(impute_value)
-#                     elif methode == 'mode':
-#                         mode_value = df[variable].mode()[0]
-#                         df.loc[:, variable] = df.loc[:, variable].fillna(mode_value)
-#                     else:
-#                         messages.append("Method not envisaged at present.")
-#                 else:
-#                     # Mode imputation for non-numeric data
-#                     mode_value = df[variable].mode()[0]
-#                     df[variable] = df[variable].fillna(mode_value)
-#                 na_counter_final = df[variable].isna().sum()                     
-#                 messages.append(f"Number of remaining NAs: {na_counter_final}")
-#             elif reponse == 'n':
-#                 messages.append(f"No imputation for this variable: {variable}.")
-#             else:
-#                 messages.append("Unrecognized answer. Please respond with 'y' or 'n'.")
-
-#     return df, messages
-
-
+##################################################################################################################################################################################################
 def explore_NA(variable, df, answers=None):
     if answers is None:
         answers = {}  # Si aucun dictionnaire de réponses n'est fourni, utilisez un dictionnaire vide
@@ -188,15 +104,13 @@ def explore_NA(variable, df, answers=None):
 
 
 
-#############################################################################################################################################
-#                                                                                                                                           #
-#        #### Analyze NA in data frame columns                                                                                              #
-#                                                                                                                                           #
-#        ## Inputs : A dataframe and a variable                         ## Ouputs : Informations about Na in a variable                     #
-#                                                                                                                                           #
-#############################################################################################################################################
-import pandas as pd
-
+################################################################################################################################################################################################
+#                                                                                                                                           
+#        #### Analyze NA in data frame columns and propose solutions to deal with them (Automatic)                                                                                      
+#                                                                                                                                           
+#        ## Inputs : A dataframe ; avariable name ; dictionary         ## Ouputs : Information about Na in a data frame columns and proposals to deal with them                  
+#                                                                                                                                           
+##################################################################################################################################################################################################
 def explore_NA_auto(variable, df, answers=None):
     if answers is None:
         answers = {}  # Si aucun dictionnaire de réponses n'est fourni, utilisez un dictionnaire vide.
@@ -242,7 +156,6 @@ def explore_NA_auto(variable, df, answers=None):
                 else:
                     impute_value = None
                     messages.append("No suitable imputation method found.")
-
                 if impute_value is not None:
                     # Correcte modification pour éviter le SettingWithCopyWarning.
                     df[variable] = df[variable].fillna(impute_value)
@@ -253,3 +166,5 @@ def explore_NA_auto(variable, df, answers=None):
                 messages.append(f"No action taken for {variable}.")
 
     return df, messages
+
+###### Merge the two functions : if respond so... in the other hand, ask to the user
